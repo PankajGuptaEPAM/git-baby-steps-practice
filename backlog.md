@@ -21,8 +21,8 @@
 - [x] Add `requirements.txt` with `requests>=2.31.0` and `python-dotenv>=1.0.0`
 - [x] Create `.env.example` with all required environment variables
 - [x] Create `report_generator/` package (`__init__.py`)
-- [ ] Verify minimum Python version (3.9+) and document it in README
-- [ ] Create `requirements-dev.txt` with `pytest>=7`, `pytest-mock`, `responses` (HTTP mocking)
+- [ ] Verify minimum Python version (3.9+) and document it in README <!-- #3 -->
+- [ ] Create `requirements-dev.txt` with `pytest>=7`, `pytest-mock`, `responses` (HTTP mocking) <!-- #4 -->
 
 ---
 
