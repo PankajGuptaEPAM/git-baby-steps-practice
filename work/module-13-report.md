@@ -1,3 +1,7 @@
+# Module 13 Completion Report
+
+## MCP Configuration
+```json
 {
     "servers": {
         "echo": {
@@ -12,14 +16,24 @@
             "env": {
                 "JIRA_URL": "${env:JIRA_BASE_URL}",
                 "JIRA_EMAIL": "${env:JIRA_EMAIL}",
-                "JIRA_API_TOKEN": "${env:JIRA_API_TOKEN}",
+                "JIRA_API_TOKEN": "[REDACTED]",
                 "CONFLUENCE_URL": "${env:CONFLUENCE_URL}"
             }
         },
-        "github": {
-            "type": "http",
-            "url": "https://api.githubcopilot.com/mcp/"
-        }
-
+        "github": { 
+      "type": "http", 
+      "url": "https://api.githubcopilot.com/mcp/"
+    }  
+        
     }
 }
+```
+
+## Configured Servers
+- echo
+- atlassian
+
+## MCP Tool Test
+- Tool used: mcp_mcp-echo_echo
+- Output:
+Hello MCP!
