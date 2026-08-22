@@ -7,7 +7,7 @@ Each entry below is an instruction file with a one-line description. Optional su
 
 ---
 
-- [`./instructions/create-status-report.agent.md`](./create-status-report.agent.md) — Generate a weekly status report in Markdown with fixed sections and format rules.
+- [`./instructions/create-status-report.agent.md`](./create-status-report.agent.md) — Generate a weekly status report in Markdown with fixed sections and format rules. ✅ battle-tested
   + Keywords: status report, weekly report, team report, create report, generate report
 
 - [`./instructions/creating-instructions.agent.md`](./creating-instructions.agent.md) — Create, update, and manage instruction files and IDE wrappers across Copilot, Cursor, and Claude Code.

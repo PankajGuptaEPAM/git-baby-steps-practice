@@ -4,6 +4,15 @@ description: Generate a weekly status report in Markdown
 
 Generate a weekly status report using the rules below.
 
+## Data source rules
+
+- Before generating the report, check whether a real Jira connection is configured (i.e. `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN`, `JIRA_BOARD_ID`, `JIRA_PROJECT_KEY` environment variables are present and a `.env` file exists).
+- If no real Jira connection is configured, generate the report using plausible placeholder data AND add this notice at the top of every output:
+  ```
+  > ⚠️ **Fake data** — no Jira connection configured. Set up `.env` with Jira credentials to use real data.
+  ```
+- If real Jira data is used, do NOT add the fake data notice.
+
 ## Format rules
 
 - Output format: Markdown only
