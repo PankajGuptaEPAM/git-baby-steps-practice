@@ -13,6 +13,9 @@ Each entry below is an instruction file with a one-line description. Optional su
 - [`./instructions/creating-instructions.agent.md`](./creating-instructions.agent.md) — Create, update, and manage instruction files and IDE wrappers across Copilot, Cursor, and Claude Code.
   + Keywords: create instruction, update instruction, new instruction, add instruction, manage instructions, set up instructions, bootstrap instructions
 
+- [`./instructions/validate-instructions.agent.md`](./validate-instructions.agent.md) — Validate instruction files individually for structure and SRP review signals.
+  + Keywords: validate instructions, review SRP, check instruction files, instruction quality
+
 - [`./instructions/calculate-compound-interest.agent.md`](./calculate-compound-interest.agent.md) — Invoke `tools/compound_interest.py` to calculate compound interest and present the results.
   + Keywords: compound interest, final amount, interest earned, investment growth, principal, annual rate
 
