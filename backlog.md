@@ -32,7 +32,7 @@
 
 - [x] `JiraClient.__init__()` — load config from `.env`, initialise authenticated `requests.Session`
 - [x] `JiraClient.get_active_sprint()` — `GET /rest/agile/1.0/board/{boardId}/sprint?state=active`
-- [x] `JiraClient.get_sprint_issues()` — JQL `openSprints()`, paginated across all results
+- [x] `JiraClient.get_sprint_issues()` — JQL `openSprints()`, paginated across all results — Approach 3
 - [x] `JiraClient.get_completed_issues()` — JQL `status = Done AND updated >= -7d`
 - [x] `JiraClient.get_blockers()` — JQL `flagged = Impediment OR priority = Blocker`
 - [x] `JiraClient.get_next_sprint_issues()` — JQL `futureSprints() ORDER BY priority ASC`, top 20
@@ -56,7 +56,7 @@
 
 ### 2c. Confluence Storage Formatter
 
-- [x] `to_confluence_storage()` — render all 9 sections as Confluence XHTML
+- [x] `to_confluence_storage()` — render all 9 sections as Confluence XHTML — Approach 3
 - [x] Render Sprint Progress, Completed Issues, In-Progress, Blockers, Team Workload, Bug Trend, Velocity, Next Sprint as tables
 - [x] Escape all user-supplied strings via `xml.sax.saxutils.escape`
 - [x] Render "—" placeholder row for any section that has no data
