@@ -21,6 +21,16 @@ services:
     environment:
       PORT: 3000
       DATABASE_URL: postgresql://weekly_status:weekly_status_dev@database:5432/weekly_status
+      JIRA_BASE_URL: https://jiraeu.epam.com
+      JIRA_EMAIL: your-email@epam.com
+      JIRA_API_TOKEN: your-jira-api-token
+      JIRA_BOARD_ID: 279935
+      JIRA_PROJECT_KEY: EPMCDMETST
+      CONFLUENCE_BASE_URL: https://kb.epam.com
+      CONFLUENCE_EMAIL: your-email@epam.com
+      CONFLUENCE_API_TOKEN: your-confluence-api-token
+      CONFLUENCE_PARENT_PAGE_ID: 2916852142
+      VELOCITY_SPRINTS: 5
     ports:
       - "3000:3000"
     volumes:

@@ -2,6 +2,16 @@ const express = require('express');
 
 const app = express();
 
+app.use((request, response, next) => {
+	response.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+	response.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+	response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	if (request.method === 'OPTIONS') {
+		return response.sendStatus(204);
+	}
+	next();
+});
+
 app.use(express.json());
 
 app.get('/api/health', async (request, response) => {

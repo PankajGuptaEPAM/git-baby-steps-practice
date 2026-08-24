@@ -26,6 +26,9 @@ def build_report(active_sprint, all_issues, completed_issues, blockers,
     else:
         rag = "🔴 Red"
 
+    highlight = f"{done_tickets} of {total_tickets} sprint tickets completed"
+    risk = "No material delivery risk identified" if not blockers else f"{len(blockers)} blocker(s) require attention"
+
     # ── In-progress issues ───────────────────────────────────────────────────
     in_progress = [
         i for i in all_issues
@@ -59,6 +62,8 @@ def build_report(active_sprint, all_issues, completed_issues, blockers,
             "completion_pct": completion_pct,
             "total_tickets": total_tickets,
             "done_tickets": done_tickets,
+            "highlight": highlight,
+            "risk": risk,
         },
         "completed_issues": [_fmt_completed(i) for i in completed_issues],
         "in_progress_issues": [_fmt_in_progress(i) for i in in_progress],
@@ -100,6 +105,7 @@ def _fmt_in_progress(issue):
         "summary": fields.get("summary", ""),
         "assignee": _assignee(issue),
         "status": fields["status"]["name"],
+        "percentage_done": fields.get("progress", {}).get("percent", ""),
         "due": (fields.get("duedate") or "")[:10],
     }
 
@@ -108,7 +114,7 @@ def _fmt_blocker(issue):
     fields = issue["fields"]
     comments = fields.get("comment", {}).get("comments", [])
     # Use the most recent comment body as the blocker description if available
-    description = comments[-1]["body"][:120] if comments else fields.get("priority", {}).get("name", "Blocker")
+    description = _comment_text(comments[-1].get("body"))[:120] if comments else fields.get("priority", {}).get("name", "Blocker")
     return {
         "key": issue["key"],
         "summary": fields.get("summary", ""),
@@ -116,6 +122,17 @@ def _fmt_blocker(issue):
         "assignee": _assignee(issue),
         "flagged_since": (fields.get("created") or "")[:10],
     }
+
+
+def _comment_text(body):
+    if isinstance(body, str):
+        return body
+    if isinstance(body, dict):
+        text = []
+        for item in body.get("content", []):
+            text.extend(node.get("text", "") for node in item.get("content", []) if isinstance(node, dict))
+        return " ".join(text)
+    return ""
 
 
 def _fmt_next(issue):

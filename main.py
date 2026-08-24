@@ -1,5 +1,6 @@
 import argparse
 import logging
+from pathlib import Path
 import sys
 from datetime import datetime
 
@@ -8,7 +9,7 @@ from dotenv import load_dotenv
 from report_generator.jira_client import JiraClient
 from report_generator.confluence_client import ConfluenceClient
 from report_generator.report_builder import build_report
-from report_generator.formatter import to_confluence_storage
+from report_generator.formatter import to_confluence_storage, to_markdown
 
 load_dotenv()
 
@@ -24,13 +25,17 @@ def main():
     args = parser.parse_args()
 
     report_date = args.date or datetime.utcnow().strftime("%Y-%m-%d")
+    try:
+        datetime.strptime(report_date, "%Y-%m-%d")
+    except ValueError:
+        parser.error("--date must be an ISO YYYY-MM-DD date")
 
     log.info("Fetching Jira data…")
     try:
         jira = JiraClient()
         active_sprint = jira.get_active_sprint()
         all_issues = jira.get_sprint_issues()
-        completed_issues = jira.get_completed_issues()
+        completed_issues = jira.get_completed_issues(report_date)
         blockers = jira.get_blockers()
         next_sprint_issues = jira.get_next_sprint_issues()
 
@@ -56,7 +61,7 @@ def main():
     )
     report["report_date"] = report_date
 
-    page_title = f"Weekly Status Report \u2014 {report_date}"
+    page_title = f"Weekly Status Report - {report_date}"
     body = to_confluence_storage(report)
 
     if args.dry_run:
@@ -73,6 +78,10 @@ def main():
         log.info("Page %s: %s", action, url)
     except Exception as exc:
         log.error("Confluence publish failed: %s", exc)
+        fallback_path = Path("reports") / f"weekly-status-report-{report_date}.md"
+        fallback_path.parent.mkdir(parents=True, exist_ok=True)
+        fallback_path.write_text(to_markdown(report), encoding="utf-8")
+        log.error("Markdown fallback saved to %s", fallback_path)
         sys.exit(1)
 
 

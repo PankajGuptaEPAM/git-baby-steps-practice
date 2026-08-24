@@ -1,6 +1,7 @@
 import os
 import requests
 from requests.auth import HTTPBasicAuth
+from datetime import date, datetime, timedelta, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -58,10 +59,14 @@ class JiraClient:
         ]
         return self._search(jql, fields)
 
-    def get_completed_issues(self):
+    def get_completed_issues(self, report_date=None):
+        report_day = _parse_report_date(report_date)
+        period_start = datetime.combine(report_day - timedelta(days=6), datetime.min.time(), tzinfo=timezone.utc)
+        period_end = datetime.combine(report_day + timedelta(days=1), datetime.min.time(), tzinfo=timezone.utc)
         jql = (
             f"project = {self.project_key} AND sprint in openSprints() "
-            "AND status = Done AND updated >= -7d"
+            f'AND status = Done AND updated >= "{period_start:%Y-%m-%d %H:%M}" '
+            f'AND updated < "{period_end:%Y-%m-%d %H:%M}"'
         )
         fields = ["summary", "status", "assignee", "customfield_10016", "resolutiondate", "updated"]
         return self._search(jql, fields)
@@ -124,3 +129,14 @@ class JiraClient:
 
 def _sp(issue):
     return issue["fields"].get("customfield_10016") or 0
+
+
+def _parse_report_date(report_date):
+    if report_date is None:
+        return datetime.now(timezone.utc).date()
+    if isinstance(report_date, date):
+        return report_date
+    try:
+        return date.fromisoformat(report_date)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("report_date must be an ISO YYYY-MM-DD date") from exc
