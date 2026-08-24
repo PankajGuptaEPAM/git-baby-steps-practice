@@ -12,6 +12,15 @@ Build a web application that retrieves the active Jira sprint for one configured
 
 The application shall provide a React 18 + Vite frontend, a Node.js 24 LTS + Express 5 backend, and PostgreSQL 15 persistence running through Docker Compose.
 
+### T-001 Report Identity and Time Decisions
+
+- The canonical Confluence page title is `Weekly Status Report - YYYY-MM-DD`.
+- `reportDate` is an ISO `YYYY-MM-DD` calendar date interpreted in UTC.
+- The report period is the seven-day UTC interval from `reportDate - 6 calendar days at 00:00:00` through `reportDate + 1 calendar day at 00:00:00`, with the start inclusive and end exclusive.
+- When `reportDate` is omitted, the system uses the current UTC calendar date.
+- Timestamps are stored in UTC and displayed as ISO date or datetime values with explicit UTC semantics.
+- Historical report generation uses these explicit boundaries; it shall not use relative Jira expressions such as `-7d`.
+
 ## 2. Problem and Users
 
 ### Problem
@@ -133,7 +142,7 @@ Executive and C-level stakeholders consume the published report. They need a con
 ### Report Generation
 
 - **FR-001:** The system shall retrieve the active sprint for the configured Jira board.
-- **FR-002:** The system shall retrieve data for completed issues updated within the last seven days.
+- **FR-002:** The system shall retrieve data for completed issues whose qualifying Jira timestamp falls within the explicit seven-day report period derived from `reportDate`.
 - **FR-003:** The system shall retrieve in-progress items for the active sprint.
 - **FR-004:** The system shall retrieve flagged issues and issues with Blocker priority.
 - **FR-005:** The system shall discover team members from sprint assignees.
@@ -222,7 +231,7 @@ Required query intent:
 
 ```text
 Active sprint: project = EPMCDMETST AND sprint in openSprints()
-Completed this week: project = EPMCDMETST AND sprint in openSprints() AND status = Done AND updated >= -7d
+Completed in report period: project = EPMCDMETST AND sprint in openSprints() AND status = Done AND updated >= "{periodStartUtc}" AND updated < "{periodEndUtc}"
 Blockers: project = EPMCDMETST AND sprint in openSprints() AND (flagged = Impediment OR priority = Blocker)
 Next sprint: project = EPMCDMETST AND sprint in futureSprints() ORDER BY priority ASC
 ```

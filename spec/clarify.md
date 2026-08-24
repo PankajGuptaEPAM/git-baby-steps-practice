@@ -11,9 +11,9 @@ This review identifies gaps, contradictions, and unclear requirements that shoul
 ### C-001: Confluence page title format conflicts
 
 - `project_spec.md` defines `Weekly Status Report — YYYY-MM-DD` using an em dash.
-- `spec/specification.md` defines `Weekly Status Report - YYYY-MM-DD` using a hyphen.
+- The detailed specification now defines `Weekly Status Report - YYYY-MM-DD` using a hyphen.
 
-**Clarify:** Which exact string is authoritative? Should the date use the user's local timezone or UTC? Add one canonical example and a testable title rule.
+**Resolved by T-001:** The detailed specification is authoritative for the web application. The canonical title is `Weekly Status Report - YYYY-MM-DD`, with the date interpreted in UTC.
 
 ### C-002: One page per run conflicts with report uniqueness
 
@@ -66,7 +66,7 @@ The specification requires completion percentages and division-by-zero safety bu
 
 The completed-issues query uses `updated >= -7d`, while the report is described as weekly and can accept a report date. Relative Jira time is evaluated at request time, so historical report generation may not reproduce the original week.
 
-**Clarify:** Define the report period from `reportDate`, its inclusive/exclusive boundaries, timezone, and whether the query should use resolved date rather than updated date.
+**Resolved by T-001:** The report period is the explicit seven-day UTC interval derived from `reportDate`, start inclusive and end exclusive. FR-002 retains the specified Jira `updated` timestamp as the qualifying field; changing to resolved date remains part of T-002 calculation rules.
 
 ### G-005: Sprint selection is underspecified
 
@@ -234,7 +234,7 @@ Logging requires operation type, timestamp, outcome, and correlation context, bu
 
 Dates appear in report titles and tables, but timezone, locale, date format, and daylight-saving behavior are not defined. PostgreSQL timestamps are required to be UTC while Jira may return timezone-aware values.
 
-**Clarify:** Define the report timezone, storage timezone, display format, and conversion rules.
+**Resolved by T-001:** Report dates and timestamps use UTC, report dates use ISO `YYYY-MM-DD`, and displayed timestamps carry explicit UTC semantics.
 
 ## 6. Frontend and UX Gaps
 
