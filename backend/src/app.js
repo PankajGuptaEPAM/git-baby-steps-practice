@@ -1,4 +1,6 @@
 const express = require('express');
+const reportRoutes = require('./routes/reportRoutes');
+const publishRoutes = require('./routes/publishRoutes');
 
 const app = express();
 
@@ -25,5 +27,8 @@ app.get('/api/health', async (request, response) => {
 		database: { ready: databaseReady },
 	});
 });
+
+app.use('/api', reportRoutes);
+app.use('/api', publishRoutes);
 
 module.exports = app;

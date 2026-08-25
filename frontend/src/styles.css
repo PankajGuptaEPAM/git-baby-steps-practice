@@ -31,5 +31,26 @@ main { max-width: 1120px; margin: 0 auto; padding: 42px 28px 80px; }
 .health-list span { margin: 0; }
 .health-list strong { color: #27634e; }
 .message.error { color: #a13d32; font-family: Arial, sans-serif; }
+.message.success { padding: 14px 18px; background: #e3f5ec; border-left: 3px solid #00875a; font-family: Arial, sans-serif; }
+.message.warning { padding: 14px 18px; background: #fff8e1; border-left: 3px solid #ff8b00; font-family: Arial, sans-serif; }
+.action-bar { display: flex; gap: 12px; margin: 28px 0; flex-wrap: wrap; }
+.btn-primary { padding: 11px 22px; background: #17211b; color: #f8f4ea; border: none; cursor: pointer; font-family: Arial, sans-serif; font-size: .84rem; letter-spacing: .04em; }
+.btn-primary:hover:not(:disabled) { background: #2e4036; }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-secondary { padding: 11px 22px; background: transparent; color: #17211b; border: 1px solid #17211b; cursor: pointer; font-family: Arial, sans-serif; font-size: .84rem; letter-spacing: .04em; }
+.btn-secondary:hover { background: rgba(23,33,27,.06); }
+.btn-link { background: none; border: none; color: #17211b; text-decoration: underline; cursor: pointer; padding: 0; font: inherit; }
+.rag-green { color: #00875a; font-size: 2rem; font-weight: 500; }
+.rag-amber { color: #ff8b00; font-size: 2rem; font-weight: 500; }
+.rag-red { color: #de350b; font-size: 2rem; font-weight: 500; }
+.report-sections { margin-top: 40px; }
+.report-section { margin-bottom: 40px; border-top: 1px solid #aab9ae; padding-top: 24px; }
+.report-section h3 { margin-bottom: 16px; font-size: 1rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #526057; }
+.summary-detail { font-family: Arial, sans-serif; font-size: .9rem; margin: 6px 0; color: #17211b; }
+.report-table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: .84rem; margin-top: 4px; }
+.report-table th { text-align: left; padding: 8px 12px; background: #17211b; color: #f8f4ea; font-weight: 600; }
+.report-table td { padding: 8px 12px; border-bottom: 1px solid #d6e0d8; vertical-align: top; word-break: break-word; }
+.report-table tr:last-child td { border-bottom: none; }
+.report-table tr:nth-child(even) td { background: rgba(248,244,234,.5); }
 @keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 640px) { .topbar { align-items: start; flex-direction: column; padding-top: 36px; } .metric-grid { grid-template-columns: 1fr; } main { padding-top: 28px; } }
