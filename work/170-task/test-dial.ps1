@@ -1,0 +1,1 @@
+curl.exe -X POST "https://ai-proxy.lab.epam.com/openai/deployments/gpt-4o/chat/completions" ` -H "Content-Type: application/json"` -H "api-key: $env:DIAL_API_KEY" ` --% -d "{\"messages\": [{\"role\": \"user\", \"content\": \"Summarize all issues in a Jira sprint using AI\"}], \"temperature\": 0.2, \"max_tokens\": 500}"
